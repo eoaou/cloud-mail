@@ -134,7 +134,7 @@ jobs:
           echo "🔍 Checking if the database exists..."
           
           set +e
-            KV_LIST=$(pnpm wrangler kv namespace list --json 2>&1)
+            KV_LIST=$(pnpm wrangler kv namespace list 2>&1)
             STATUS=$?
           set -e
           
