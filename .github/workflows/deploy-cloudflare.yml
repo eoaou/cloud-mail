@@ -140,6 +140,7 @@ jobs:
           
           if [ $STATUS -ne 0 ]; then
             echo "$KV_LIST"
+            exit 1
           fi
                   
           if echo "$KV_LIST" | jq -e ".[] | select(.title == \"$NAME\")"; then
@@ -177,6 +178,7 @@ jobs:
           
           if [ $STATUS -ne 0 ]; then
             echo "$D1_LIST"
+            exit 1
           fi
           
           if echo "$DB_LIST" | jq -e ".[] | select(.name == \"$NAME\")"; then
