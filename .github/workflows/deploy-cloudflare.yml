@@ -200,7 +200,8 @@ jobs:
         working-directory: ./mail-worker
         run: |
           echo "🚀 Starting deployment..."
-          pnpm wrangler deploy -c wrangler-action.toml | tee deploy.log | grep -v "https://.*\.workers\.dev" || true
+          pnpm wrangler deploy -c wrangler-action.toml | tee deploy.log
+          grep -v "https://.*\.workers\.dev" deploy.log || true
           WORKER_URL=$(grep -o "https://.*\.workers\.dev" deploy.log || echo "")
           
           if [ -n "$WORKER_URL" ]; then
