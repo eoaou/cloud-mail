@@ -200,19 +200,9 @@ jobs:
         working-directory: ./mail-worker
         run: |
           echo "🚀 Starting deployment..."
-          pnpm wrangler deploy -c wrangler-action.toml 2>&1 | tee deploy.log
           
           pnpm wrangler deploy -c wrangler-action.toml \
-            | tee deploy.log \
-            | grep -v "https://.*\.workers\.dev" || true
-          
-          WORKER_URL=$(grep -o "https://.*\.workers\.dev" deploy.log || echo "")
-          
-          if [ -n "$WORKER_URL" ]; then
-            echo "::add-mask::$WORKER_URL"
-          fi
-          
-          echo "worker_url=$WORKER_URL" >> $GITHUB_OUTPUT
+            | tee deploy.log 
           echo "✅ Setup completed."
 
       - name: ♻️ 初始化数据库 / Initialize database
