@@ -201,8 +201,7 @@ jobs:
         run: |
           echo "🚀 Starting deployment..."
           
-          pnpm wrangler deploy -c wrangler-action.toml \
-            | tee deploy.log 
+          pnpm wrangler deploy -c wrangler-action.toml 
           echo "✅ Setup completed."
 
       - name: ♻️ 初始化数据库 / Initialize database
