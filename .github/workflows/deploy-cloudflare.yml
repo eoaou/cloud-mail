@@ -132,9 +132,16 @@ jobs:
           fi
           
           echo "🔍 Checking if the database exists..."
-          pnpm wrangler kv namespace list
-          KV_LIST=$(pnpm wrangler kv namespace list)
           
+          set +e
+            KV_LIST=$(pnpm wrangler kv namespace list --json 2>&1)
+            STATUS=$?
+          set -e
+          
+          if [ $STATUS -ne 0 ]; then
+            echo "$KV_LIST"
+          fi
+                  
           if echo "$KV_LIST" | jq -e ".[] | select(.title == \"$NAME\")"; then
             echo "✅ Database $NAME already exists."
             KV_ID=$(echo "$KV_LIST" | jq -r ".[] | select(.title == \"$NAME\") | .id")
@@ -162,7 +169,15 @@ jobs:
           fi
           
           echo "🔍 Checking if the database exists..."
-          DB_LIST=$(pnpm wrangler d1 list --json)
+          
+          set +e
+            D1_LIST=$(pnpm wrangler d1 list --json 2>&1)
+            STATUS=$?
+          set -e
+          
+          if [ $STATUS -ne 0 ]; then
+            echo "$D1_LIST"
+          fi
           
           if echo "$DB_LIST" | jq -e ".[] | select(.name == \"$NAME\")"; then
             echo "✅ Database $NAME already exists."
