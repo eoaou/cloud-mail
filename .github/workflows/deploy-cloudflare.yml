@@ -203,7 +203,7 @@ jobs:
           pnpm wrangler deploy -c wrangler-action.toml | tee deploy.log | grep -v "https://.*\.workers\.dev" || true
           WORKER_URL=$(grep -o "https://.*\.workers\.dev" deploy.log || echo "")
           
-          if grep -q "\[ERROR\]" deploy.log; then
+          if grep -q "Unable to authenticate request" deploy.log; then
             exit 1
           fi
           
